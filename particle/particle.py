@@ -21,11 +21,40 @@ class Particle:
         string += "velocity = ({:.4f}, {:.4f})\n".format(self.vx, self.vy)
         return string
 
-    def step(self, dt):
+    def euler_step(self, dt, c):
+        #This is with F = -mg
+        # self.x = self.x + dt*self.vx
+        # self.y = self.y + dt*self.vy
+        # self.vx = self.vx
+        # self.vy = self.vy -(dt*G)
+        # self.t = self.t + dt
+
+        #This is with F = mg + cV (drag resistance)
         self.x = self.x + dt*self.vx
         self.y = self.y + dt*self.vy
-        self.vx = self.vx
-        self.vy = self.vy -(dt*G)
+        self.vx = self.vx*(1 - (c/self.m)*dt)
+        if self.vy >= 0:
+            self.vy = self.vy*(1 - (dt*c)/self.m) - dt*G
+        else:
+            self.vy = self.vy*(1 + (dt*c)/self.m) - dt*G
+        self.t = self.t + dt
+
+    def euler_cromer_step(self, dt, c):
+        #This is with F = -mg
+        # self.vx = self.vx
+        # self.vy = self.vy -(dt*G)
+        # self.x = self.x + dt*self.vx
+        # self.y = self.y + dt*self.vy
+        # self.t = self.t + dt
+
+        #This is with F = mg + cV (drag resistance)
+        self.vx = self.vx*(1 - (c/self.m)*dt)
+        if self.vy >= 0:
+            self.vy = self.vy*(1 - (dt*c)/self.m) - dt*G
+        else:
+            self.vy = self.vy*(1 + (dt*c)/self.m) - dt*G
+        self.x = self.x + dt*self.vx
+        self.y = self.y + dt*self.vy
         self.t = self.t + dt
 
     def get_state(self):
