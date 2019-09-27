@@ -19,7 +19,7 @@ def grav_force(state, params):
     return vxp, vyp, axp, ayp, 1.
 
 def euler(planet, numeric, xpos, ypos, tpos):
-    for i in range(1000001):
+    for i in range(3001):
         xc, yc, _, _, tc = planet.get_state()
         xpos.append(xc)
         ypos.append(yc)
@@ -45,7 +45,7 @@ def midpoint(planet, numeric, xpos, ypos, tpos):
 #Initial Variables and lists
 
 m, x0, y0, v0, a0 = 1., 1., 0., 6.283185307179, 90
-deltat = 0.00001
+deltat = 0.001
 sim_params = pt.GM
 
 planet = pt.Particle("Planet X", x0, y0, v0, a0, m)
@@ -75,15 +75,15 @@ numeric2 = sv.Solver(planet2, "Euler-Cromer", deltat)
 numeric3 = sv.Solver(planet3, "Midpoint", deltat)
 
 euler(planet, numeric1, xposEuler, yposEuler, tposEuler)
-#euler_cromer(planet2, numeric2, xposEulerCromer, yposEulerCromer, tposEulerCromer)
-#midpoint(planet3, numeric3, xposMidpoint, yposMidpoint, tposMidpoint)
+euler_cromer(planet2, numeric2, xposEulerCromer, yposEulerCromer, tposEulerCromer)
+midpoint(planet3, numeric3, xposMidpoint, yposMidpoint, tposMidpoint)
 
 #Generate Plots
 
 fig, ax = plt.subplots()
 ax.plot(xposEuler, yposEuler, '-', label='Euler')
-#ax.plot(xposEulerCromer, yposEulerCromer, '-', label='Euler-Cromer')
-#ax.plot(xposMidpoint, yposMidpoint, '-', label='Midpoint')
+ax.plot(xposEulerCromer, yposEulerCromer, '-', label='Euler-Cromer')
+ax.plot(xposMidpoint, yposMidpoint, '-', label='Midpoint')
 
 ax.set(xlabel='x (a.u.)', ylabel='y (a.u.)',
        title='Euler\'s method with dt = 0.00001 and 1000000 iterations ')
