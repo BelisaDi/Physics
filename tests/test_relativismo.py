@@ -19,19 +19,23 @@ def grav_force(state, params):
     return vxp, vyp, axp, ayp, 1.
 
 def euler_cromer(planet, numeric, xpos, ypos, tpos, angles):
-    for i in range(40001):
+    for i in range(40000):
         xc, yc, _, _, tc = planet.get_state()
         xpos.append(xc)
         ypos.append(yc)
         tpos.append(tc)
-        angles.append(planet.get_angle()/np.pi)
+        #ang = planet.get_angle()/np.pi
+        ang_inicial = planet.get_angle()
+        #angles.append(ang)
         numeric.euler_cromer_step(deltat)
+        ang_final = planet.get_angle()
+        angles.append((ang_final - ang_inicial)/deltat)
 
 #Initial Variables and lists
-
-m, x0, y0, v0, a0 = 1., 1., 0., 5, 90
+#np.sqrt((pt.GM)/1**(1+delta_sim))
 deltat = 0.0001
 delta_sim = 0.05
+m, x0, y0, v0, a0 = 1., 1., 0., 5, 90
 sim_params = pt.GM, delta_sim
 
 planet2 = pt.Particle("Planet Y", x0, y0, v0, a0, m)
@@ -41,16 +45,20 @@ xposEulerCromer = []
 yposEulerCromer = []
 tposEulerCromer = []
 angles = []
+graph_angles = []
 
 numeric2 = sv.Solver(planet2, "Euler-Cromer", deltat)
 
 euler_cromer(planet2, numeric2, xposEulerCromer, yposEulerCromer, tposEulerCromer, angles)
 
+
 #Generate Plots
 
 fig, ax = plt.subplots()
-#ax.plot(tposEulerCromer, angles, '-', label='Euler-Cromer')
-ax.plot(xposEulerCromer, yposEulerCromer, '-')
+#print(angles)
+
+ax.plot(tposEulerCromer, angles, '-', label='Euler-Cromer')
+#ax.plot(xposEulerCromer, yposEulerCromer, '-')
 
 ax.set(xlabel='time', ylabel='angle',
        title='First trial')
