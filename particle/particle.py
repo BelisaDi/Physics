@@ -31,3 +31,13 @@ class Particle:
 
     def get_energy(self):
         return .5*self.m*(self.vx**2 + self.vy**2) - (GM*self.m)/np.sqrt(self.x**2 + self.y**2)
+
+    def get_angle(self):
+        if self.x >= 0 and self.y >= 0:
+            return abs(np.arctan(self.y / self.x))
+        elif self.x < 0 and self.y >= 0:
+            return np.pi/2 + abs(np.arctan(self.x / self.y))
+        elif self.x < 0 and self.y < 0 :
+            return np.pi + abs(np.arctan(self.y / self.x))
+        else:
+            return 2*np.pi - abs(np.arctan(self.y / self.x))
