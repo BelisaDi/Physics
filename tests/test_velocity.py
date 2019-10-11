@@ -19,7 +19,7 @@ def grav_force(state, params):
     return vxp, vyp, axp, ayp, 1.
 
 def euler_cromer(planet, numeric, xpos, ypos, tpos, vel):
-    for i in range(16800):
+    for i in range(8949):
         xc, yc, vxc, vyc, tc = planet.get_state()
         xpos.append(xc)
         ypos.append(yc)
@@ -29,7 +29,7 @@ def euler_cromer(planet, numeric, xpos, ypos, tpos, vel):
 
 #Initial Variables and lists
 
-m, x0, y0, v0, a0 = 1., 0.5, 0., 4., 90
+m, x0, y0, v0, a0 = 1., 6., 0., 2, 90
 deltat = 0.001
 sim_params = pt.GM
 
@@ -47,25 +47,23 @@ numeric2 = sv.Solver(planet2, "Euler-Cromer", deltat)
 euler_cromer(planet2, numeric2, xposEulerCromer, yposEulerCromer, tposEulerCromer, vel)
 
 #Generate Plots
-#print(xposEulerCromer)
 print("Xs")
 xmax = max(xposEulerCromer)
 xmin = min(xposEulerCromer)
 print(xmax)
 print(xmin)
 print("Ys")
-#print(yposEulerCromer)
 ymax = max(yposEulerCromer)
 ymin = min(yposEulerCromer)
 print(ymax)
 print(ymin)
 
 fig, ax = plt.subplots()
-ax.plot(xposEulerCromer, yposEulerCromer, '-', label='Euler-Cromer')
-#ax.plot(yposEulerCromer, vel, '-', label='Euler-Cromer')
+#ax.plot(xposEulerCromer, yposEulerCromer, '-', label='Euler-Cromer')
+ax.plot(tposEulerCromer, vel, '-', label='Euler-Cromer')
 
-ax.set(xlabel='t yr', ylabel='vel',
-       title='Ensayo y error ')
+ax.set(xlabel='t (yr)', ylabel='V (AU/yr)',
+       title='Planet with x0 = 6 AU, Vy0 = 2 AU/yr')
 ax.grid()
 
 plt.legend()

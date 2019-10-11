@@ -27,13 +27,13 @@ semieje_mayor=[2.63958953904757,
 
 for i in range(len(periodo)):
     periodo[i] = np.log(periodo[i])
-    semieje_mayor[i] = np.log(semieje_mayor[i]) 
+    semieje_mayor[i] = np.log(semieje_mayor[i])
 
 fig, ax = plt.subplots()
 ax.plot(semieje_mayor, periodo, 'ro', label='Euler-Cromer')
 
-ax.set(xlabel='semieje', ylabel='periodo',
-       title='Tercera ley de Kepler ')
+ax.set(xlabel='ln(a)', ylabel='ln(T)',
+       title='Kepler\'s Third Law')
 ax.grid()
 
 plt.legend()

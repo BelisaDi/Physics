@@ -19,7 +19,7 @@ def grav_force(state, params):
     return vxp, vyp, axp, ayp, 1.
 
 def euler_cromer(planet, numeric, xpos, ypos, tpos, area):
-    for i in range(3441):
+    for i in range(13700):
         xc, yc, vxc, vyc, tc = planet.get_state()
         xpos.append(xc)
         ypos.append(yc)
@@ -29,7 +29,7 @@ def euler_cromer(planet, numeric, xpos, ypos, tpos, area):
 
 #Initial Variables and lists
 
-m, x0, y0, v0, a0 = 1., 1., 0., 6.283185307, 90
+m, x0, y0, v0, a0 = 1., 10., 0., 1, 90
 deltat = 0.001
 sim_params = pt.GM
 
@@ -64,8 +64,8 @@ fig, ax = plt.subplots()
 #ax.plot(xposEulerCromer, yposEulerCromer, '-', label='Euler-Cromer')
 ax.plot(tposEulerCromer, areas, '-', label='Euler-Cromer')
 
-ax.set(xlabel='t yr', ylabel='area',
-       title='Ensayo y error ')
+ax.set(xlabel='t (yr)', ylabel='area (AU^2)',
+       title='Elliptical Orbit')
 ax.grid()
 
 plt.legend()
