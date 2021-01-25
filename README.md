@@ -1,2 +1,3 @@
-# Physics
-Repositorio de clase de física. Simulaciones y demás.
+# Planetary Motion
+
+Estudio del movimiento de los planetas.
